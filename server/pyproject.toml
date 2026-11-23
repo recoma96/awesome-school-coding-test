@@ -16,6 +16,10 @@ dev = [
     "ruff>=0.17.6",
 ]
 
+[tool.ruff]
+# Django가 자동 생성하는 마이그레이션은 검사하지 않는다.
+extend-exclude = ["**/migrations/*"]
+
 [tool.ruff.lint]
 # Q: flake8-quotes — 문자열 따옴표 스타일 통일
 select = ["Q"]

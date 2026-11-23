@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+
+    "apps.users",
 ]
 
 MIDDLEWARE = [
@@ -84,6 +86,11 @@ DATABASES = {
         "PORT": os.getenv("POSTGRES_PORT", "5432"),
     }
 }
+
+
+# Authentication
+
+AUTH_USER_MODEL = "users.User"
 
 
 # Password validation
