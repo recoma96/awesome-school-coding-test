@@ -84,6 +84,17 @@ uv run python manage.py test --settings=config.settings.testing
 테스트 실행 시 Django가 테스트용 데이터베이스를 자동으로 생성하고, 끝나면 삭제합니다.
 `.env`에 지정한 데이터베이스는 그대로 유지됩니다.
 
+## 코드 스타일
+
+[ruff](https://docs.astral.sh/ruff/)로 문자열 따옴표 스타일을 검사합니다. 이중따옴표(`"`)로 통일합니다.
+
+```bash
+uv run ruff check .         # 검사
+uv run ruff check --fix .   # 자동 수정
+```
+
+적용 규칙은 `pyproject.toml`의 `[tool.ruff.lint]`에 정의되어 있습니다.
+
 ## 설정 환경 (settings)
 
 설정은 `config/settings/` 아래에 환경별로 분리되어 있으며, 모두 `base.py`를 상속합니다.

@@ -13,4 +13,14 @@ dependencies = [
 [dependency-groups]
 dev = [
     "python-dotenv>=1.2.4",
+    "ruff>=0.17.6",
 ]
+
+[tool.ruff.lint]
+# Q: flake8-quotes — 문자열 따옴표 스타일 통일
+select = ["Q"]
+
+[tool.ruff.lint.flake8-quotes]
+inline-quotes = "double"
+docstring-quotes = "double"
+multiline-quotes = "double"
