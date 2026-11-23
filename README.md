@@ -2,6 +2,17 @@
 
 어썸스쿨 사전 과제
 
+## 디렉토리 구조
+
+```
+.
+├── server/   # Django REST Framework (API 서버)
+└── web/      # 프론트엔드 HTML / CSS / JS
+```
+
+`web/`은 nginx·CDN이 직접 서빙하며 Django를 경유하지 않습니다.
+아래 명령은 모두 `server/` 디렉토리에서 실행합니다.
+
 ## 요구사항
 
 - Python 3.14 (`.python-version` 참고)
@@ -13,6 +24,7 @@
 ### 1. 의존성 설치
 
 ```bash
+cd server
 uv sync
 ```
 
@@ -93,5 +105,18 @@ uv run python manage.py runserver --settings=config.settings.dev
 ## 참고
 
 - 데이터베이스는 PostgreSQL을 사용하며, `local` / `dev` / `prod` / `testing` 모두 동일합니다.
+- 정적 파일 책임은 아래와 같이 나뉩니다.
+
+  | 대상 | 서빙 주체 |
+  | --- | --- |
+  | `web/` (프론트엔드) | nginx / CDN |
+  | `/static/` (Admin, DRF) | `runserver` (`DEBUG=True`) 또는 nginx (`DEBUG=False`) |
+
+  `DEBUG=False`인 `prod`에서는 `runserver`가 정적 파일을 서빙하지 않습니다.
+  배포 시 `collectstatic`으로 `server/staticfiles/`에 모은 뒤 nginx가 `/static/`을 해당 경로로 서빙해야 합니다.
+
+  ```bash
+  uv run python manage.py collectstatic --settings=config.settings.prod
+  ```
 - 시간대는 `Asia/Seoul`, `USE_TZ = True`로 설정되어 있습니다.
   DB에는 UTC 절대시각으로 저장되고, 출력(DRF / 템플릿 / admin)은 KST로 변환됩니다.

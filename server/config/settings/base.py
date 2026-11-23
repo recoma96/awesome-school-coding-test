@@ -122,6 +122,10 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# Django Admin / DRF 정적 파일 수집 경로.
+# web/ 은 nginx·CDN이 직접 서빙하므로 여기에 포함되지 않는다.
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 
 # Email
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration
