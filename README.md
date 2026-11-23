@@ -6,6 +6,7 @@
 
 - Python 3.14 (`.python-version` 참고)
 - [uv](https://docs.astral.sh/uv/) — 패키지 / 가상환경 관리
+- PostgreSQL 15 이상
 
 ## 설치
 
@@ -28,6 +29,13 @@ cp .env.example .env
 ```dotenv
 # Django
 DJANGO_SECRET_KEY=
+
+# Database (PostgreSQL)
+POSTGRES_DB=
+POSTGRES_USER=
+POSTGRES_PASSWORD=
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
 ```
 
 시크릿 키는 아래 명령으로 생성할 수 있습니다.
@@ -61,6 +69,9 @@ http://127.0.0.1:8000 에서 확인하실 수 있습니다.
 uv run python manage.py test --settings=config.settings.testing
 ```
 
+테스트 실행 시 Django가 테스트용 데이터베이스를 자동으로 생성하고, 끝나면 삭제합니다.
+`.env`에 지정한 데이터베이스는 그대로 유지됩니다.
+
 ## 설정 환경 (settings)
 
 설정은 `config/settings/` 아래에 환경별로 분리되어 있으며, 모두 `base.py`를 상속합니다.
@@ -81,6 +92,6 @@ uv run python manage.py runserver --settings=config.settings.dev
 
 ## 참고
 
-- 데이터베이스는 현재 SQLite(`db.sqlite3`)를 사용합니다.
+- 데이터베이스는 PostgreSQL을 사용하며, `local` / `dev` / `prod` / `testing` 모두 동일합니다.
 - 시간대는 `Asia/Seoul`, `USE_TZ = True`로 설정되어 있습니다.
   DB에는 UTC 절대시각으로 저장되고, 출력(DRF / 템플릿 / admin)은 KST로 변환됩니다.
