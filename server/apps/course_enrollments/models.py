@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.db.models import Q
 
 class CourseEnrollmentStatus(models.TextChoices):
     PENDING = "PENDING", "신청 접수"
@@ -10,11 +10,26 @@ class CourseEnrollmentStatus(models.TextChoices):
     COMPLETED = "COMPLETED", "수강 완료"
 
 
+
+IN_PROGRESS_STATUSES = (
+    CourseEnrollmentStatus.PENDING,
+    CourseEnrollmentStatus.IN_REVIEW,
+    CourseEnrollmentStatus.APPROVED,
+)
+
+
 class CourseEnrollment(models.Model):
     class Meta:
         db_table = "course_enrollment"
         verbose_name = "교육 신청 내역"
         verbose_name_plural = "교육 신청 목록"
+        constraints = [
+            models.UniqueConstraint(
+                fields=["email"],
+                condition=Q(status__in=IN_PROGRESS_STATUSES),
+                name="unique_in_progress_enrollment_per_email",
+            ),
+        ]
 
     name = models.CharField(max_length=16, verbose_name="신청자 이름")
     available_connection_date = models.DateField(verbose_name="연락 가능 날짜")
