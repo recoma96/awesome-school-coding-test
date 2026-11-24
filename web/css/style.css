@@ -22,7 +22,7 @@
 
 body {
   margin: 0;
-  font-family: "Nanum Gothic Coding", monospace;
+  font-family: "Noto Sans KR", sans-serif;
   color: var(--color-text);
   background: var(--color-bg);
   line-height: 1.5;
