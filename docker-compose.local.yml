@@ -1,0 +1,32 @@
+# ============================================================
+# 로컬 개발 전용 (Local Development Only)
+#
+# 실서버(dev / prod) 배포에 사용하지 않습니다.
+# 로컬에서 web/ 과 Django API를 운영과 같은 "동일 도메인" 구조로 확인하기 위한 구성입니다.
+#
+#   브라우저 → http://localhost:8080 (nginx 컨테이너)
+#               ├─ /                       → web/ (정적 파일, 볼륨 마운트)
+#               └─ /api/ /admin/ /static/  → 호스트의 Django runserver (127.0.0.1:8000)
+#
+# Django와 PostgreSQL은 이 compose에 포함하지 않습니다.
+#   - Django:     호스트에서 직접 runserver 로 실행합니다.
+#   - PostgreSQL: 기존에 사용하던 DB를 그대로 사용합니다.
+#
+# 실행: docker compose -f docker-compose.local.yml up -d
+# 종료: docker compose -f docker-compose.local.yml down
+# ============================================================
+
+name: awesome-school-local
+
+services:
+  nginx:
+    image: nginx:alpine
+    container_name: awesome-school-nginx-local
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx/local.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./web:/usr/share/nginx/html:ro
+    extra_hosts:
+      # Linux Docker Engine에서도 host.docker.internal 로 호스트에 접근할 수 있게 한다.
+      - "host.docker.internal:host-gateway"
