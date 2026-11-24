@@ -29,7 +29,7 @@ const landingData = {
 const title = document.getElementById("title");
 const introduction = document.getElementById("introduction");
 
-title.textContent = landingData.title;
+title.textContent = `🤖 ${landingData.title} 🤖`;
 introduction.textContent = landingData.introduction;
 
 const curriculumList = document.getElementById("curriculum-list");

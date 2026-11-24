@@ -53,6 +53,22 @@
   object-position: center;
 }
 
+.curriculum-card__order {
+  color: white;
+  background-color: rgb(110, 72, 200);
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+}
+
+.title {
+  color: rgb(142, 12, 142);
+}
+
+.curriculum-title {
+  color: rgb(110, 72, 200);
+}
 
 @media (min-width: 768px) {
   .main-page {
@@ -67,5 +83,10 @@
   .curriculum-card {
     box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
     padding: 0 32px;
+  }
+
+  .curriculum-card__order {
+    padding: 6px 24px;
+    font-size: 1.2rem;
   }
 }
