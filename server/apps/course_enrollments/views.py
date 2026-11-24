@@ -10,3 +10,4 @@ class CourseEnrollmentsViewSet(
 ):
     queryset = CourseEnrollment.objects.all()
     serializer_class = CourseEnrollmentsSerializer
+    authentication_classes = []

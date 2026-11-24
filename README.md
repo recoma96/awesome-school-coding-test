@@ -84,6 +84,27 @@ uv run python manage.py test --settings=config.settings.testing
 테스트 실행 시 Django가 테스트용 데이터베이스를 자동으로 생성하고, 끝나면 삭제합니다.
 `.env`에 지정한 데이터베이스는 그대로 유지됩니다.
 
+## API 문서
+
+[drf-spectacular](https://drf-spectacular.readthedocs.io/)로 OpenAPI 스키마와 Swagger UI를 제공합니다.
+개발 서버 실행 후 아래 주소에서 확인하실 수 있습니다.
+
+| URL | 내용 |
+| --- | --- |
+| http://127.0.0.1:8000/api/docs/ | Swagger UI |
+| http://127.0.0.1:8000/api/schema/ | OpenAPI 스키마 (YAML) |
+
+API 문서는 `local` / `dev` 환경에서만 활성화되며, `testing` / `prod`에서는 위 URL이 등록되지 않습니다(404).
+노출 여부는 settings의 `ENABLE_API_DOCS` 값으로 결정됩니다. `base.py`의 기본값은 `False`이고, `local.py` / `dev.py`에서 `True`로 덮어씁니다.
+
+요청 / 응답 JSON은 camelCase를 사용하므로, 문서의 필드명도 camelCase로 표시됩니다.
+
+스키마를 파일로 추출하려면 아래 명령을 사용합니다.
+
+```bash
+uv run python manage.py spectacular --file schema.yml --settings=config.settings.local
+```
+
 ## 코드 스타일
 
 [ruff](https://docs.astral.sh/ruff/)로 문자열 따옴표 스타일을 검사합니다. 이중따옴표(`"`)로 통일합니다.
@@ -99,12 +120,12 @@ uv run ruff check --fix .   # 자동 수정
 
 설정은 `config/settings/` 아래에 환경별로 분리되어 있으며, 모두 `base.py`를 상속합니다.
 
-| 모듈 | 용도 | `.env` 로드 |
-| --- | --- | --- |
-| `config.settings.local` | 개발자가 직접 노트북/PC에서 개발할 때 | O |
-| `config.settings.testing` | unittest 실행 시 | O |
-| `config.settings.dev` | 개발 서버 | X |
-| `config.settings.prod` | 프로덕션 서버 | X |
+| 모듈 | 용도 | `.env` 로드 | API 문서 |
+| --- | --- | --- | --- |
+| `config.settings.local` | 개발자가 직접 노트북/PC에서 개발할 때 | O | O |
+| `config.settings.testing` | unittest 실행 시 | O | X |
+| `config.settings.dev` | 개발 서버 | X | O |
+| `config.settings.prod` | 프로덕션 서버 | X | X |
 
 `manage.py`의 기본값이 `config.settings.local`이므로 로컬 개발 시에는 별도로 지정하지 않아도 됩니다.
 다른 환경으로 실행할 때는 `--settings` 옵션이나 `DJANGO_SETTINGS_MODULE` 환경 변수를 사용합니다.
