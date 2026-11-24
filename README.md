@@ -6,18 +6,23 @@
 
 ```
 .
-├── server/   # Django REST Framework (API 서버)
-└── web/      # 프론트엔드 HTML / CSS / JS
+├── server/                    # Django REST Framework (API 서버)
+├── web/                       # 프론트엔드 HTML / CSS / JS
+├── nginx/local.conf           # 로컬 개발 전용 nginx 설정
+└── docker-compose.local.yml   # 로컬 개발 전용 (nginx)
 ```
 
 `web/`은 nginx·CDN이 직접 서빙하며 Django를 경유하지 않습니다.
-아래 명령은 모두 `server/` 디렉토리에서 실행합니다.
+웹과 API는 nginx 아래 **동일 도메인**으로 서비스되는 것을 전제로 합니다. (프론트엔드는 `/api/...` 상대 경로로 API를 호출합니다.)
+
+별도 표기가 없는 명령은 `server/` 디렉토리에서 실행합니다.
 
 ## 요구사항
 
 - Python 3.14 (`.python-version` 참고)
 - [uv](https://docs.astral.sh/uv/) — 패키지 / 가상환경 관리
 - PostgreSQL 15 이상
+- Docker (Docker Compose 포함) — 로컬에서 웹 페이지를 확인할 때만 필요합니다.
 
 ## 설치
 
@@ -74,6 +79,35 @@ uv run python manage.py runserver --settings=config.settings.local
 http://127.0.0.1:8000 에서 확인하실 수 있습니다.
 
 `--settings`에 들어갈 값은 실행 환경에 따라 달라집니다. 선택지는 아래 [설정 환경](#설정-환경-settings) 섹션을 참고해주세요.
+
+### 5. 웹 페이지 확인 (로컬 개발 전용)
+
+> ⚠️ `docker-compose.local.yml`과 `nginx/local.conf`는 **로컬 개발 전용**입니다. 실서버(dev / prod) 배포에는 사용하지 않습니다.
+
+`web/`의 HTML 파일을 브라우저에서 직접 열면(`file://`) CSS / JS 경로와 API 호출이 동작하지 않습니다.
+운영과 같은 동일 도메인 구조를 로컬에서 재현하기 위해 nginx 컨테이너를 사용합니다.
+
+```
+브라우저 → http://localhost:8080 (nginx 컨테이너)
+            ├─ /                       → web/
+            └─ /api/ /admin/ /static/  → Django runserver (127.0.0.1:8000)
+```
+
+4번의 개발 서버를 실행한 상태에서, **프로젝트 루트**에서 아래 명령을 실행합니다.
+
+```bash
+docker compose -f docker-compose.local.yml up -d     # 실행
+docker compose -f docker-compose.local.yml down      # 종료
+```
+
+| URL | 내용 |
+| --- | --- |
+| http://localhost:8080/register/ | 교육 신청 페이지 |
+| http://localhost:8080/api/docs/ | API 문서 |
+| http://localhost:8080/admin/ | Django Admin |
+
+- `web/`은 볼륨으로 마운트되어 있어, 파일을 수정한 뒤 새로고침하면 바로 반영됩니다.
+- Django와 PostgreSQL은 컨테이너에 포함되지 않습니다. Django는 호스트에서 직접 실행하고, DB는 기존에 사용하던 것을 그대로 사용합니다.
 
 ## 테스트
 
