@@ -21,7 +21,7 @@ class CourseEnrollmentCreateAPITest(APITestCase):
 
     def setUp(self):
         tommorow = timezone.localdate() + timedelta(days=1)
-        self.payload["availableConnectionDate"] = tommorow.isoformat()
+        self.payload = {**self.payload, "availableConnectionDate": tommorow.isoformat()}
 
     def create_enrollment(self, enrollment_status: str) -> CourseEnrollment:
         """기존 신청 내역을 DB에 직접 만든다."""
