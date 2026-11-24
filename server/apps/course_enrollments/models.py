@@ -28,6 +28,7 @@ class CourseEnrollment(models.Model):
                 fields=["email"],
                 condition=Q(status__in=IN_PROGRESS_STATUSES),
                 name="unique_in_progress_enrollment_per_email",
+                violation_error_message="이미 진행 중인 신청 내역이 있습니다.",
             ),
         ]
 
