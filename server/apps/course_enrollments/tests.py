@@ -1,4 +1,7 @@
+from datetime import timedelta
+
 from django.urls import reverse
+from django.utils import timezone
 from rest_framework import status
 from rest_framework.test import APITestCase
 
@@ -15,6 +18,10 @@ class CourseEnrollmentCreateAPITest(APITestCase):
         "email": "hong@example.com",
         "address": "서울특별시 강남구",
     }
+
+    def setUp(self):
+        tommorow = timezone.localdate() + timedelta(days=1)
+        self.payload = {**self.payload, "availableConnectionDate": tommorow.isoformat()}
 
     def create_enrollment(self, enrollment_status: str) -> CourseEnrollment:
         """기존 신청 내역을 DB에 직접 만든다."""
@@ -67,6 +74,38 @@ class CourseEnrollmentCreateAPITest(APITestCase):
                     ["이미 진행 중인 신청 내역이 있습니다."],
                 )
                 self.assertEqual(CourseEnrollment.objects.count(), 1)
+
+    def test_create_failed_when_past_available_connection_date(self):
+        past = timezone.localdate() - timedelta(days=1)
+        payload = {
+            **self.payload,
+            "availableConnectionDate": past.isoformat(),
+        }
+
+        response = self.client.post(self.url, payload, format="json")
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+        response_data = response.json()
+        self.assertIn("availableConnectionDate", response_data)
+        self.assertEqual(response_data["availableConnectionDate"][0], "연락 가능 날짜는 내일 이후로 선택해주세요.")
+
+
+    def test_create_failed_when_today_available_connection_date(self):
+        past = timezone.localdate()
+        payload = {
+            **self.payload,
+            "availableConnectionDate": past.isoformat(),
+        }
+
+        response = self.client.post(self.url, payload, format="json")
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+        response_data = response.json()
+        self.assertIn("availableConnectionDate", response_data)
+        self.assertEqual(response_data["availableConnectionDate"][0], "연락 가능 날짜는 내일 이후로 선택해주세요.")
+
 
     def test_create_allowed_when_previous_closed(self):
         """같은 이메일이어도 이전 신청이 취소/반려/완료라면 새로 신청할 수 있다."""
