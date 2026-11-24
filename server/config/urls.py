@@ -15,8 +15,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
+from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 
 api_urlpatterns = [
@@ -28,3 +30,14 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include(api_urlpatterns)),
 ]
+
+# API 문서는 local, dev 환경에서만 노출한다. (settings.ENABLE_API_DOCS)
+if settings.ENABLE_API_DOCS:
+    urlpatterns += [
+        path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
+        path(
+            "api/docs/",
+            SpectacularSwaggerView.as_view(url_name="schema"),
+            name="swagger-ui",
+        ),
+    ]
