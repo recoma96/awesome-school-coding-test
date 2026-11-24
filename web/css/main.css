@@ -1,0 +1,92 @@
+.main-page {
+  padding: 16px 24px;
+  text-align: center;
+}
+
+.introduction-text {
+  white-space: pre-line;
+}
+
+.curriculum-layer {
+  margin-top: 64px;
+}
+
+.curriculum-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+}
+
+.curriculum-card {
+  padding: 0 16px;
+  width: 100%;
+  max-width: 800px;
+}
+
+.curriculum-card__image {
+  display: block;
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+}
+
+.curriculum-card__activity {
+  margin: 0 0 24px 0;
+}
+
+
+.apply-button {
+  max-width: 800px;
+  width: 100%;
+  margin: 48px auto 0;
+  margin-top: 48px;
+}
+
+.main-image {
+  width: 100%;
+  height: auto;
+  max-height: 480px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.curriculum-card__order {
+  color: white;
+  background-color: rgb(110, 72, 200);
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+}
+
+.title {
+  color: rgb(142, 12, 142);
+}
+
+.curriculum-title {
+  color: rgb(110, 72, 200);
+}
+
+@media (min-width: 768px) {
+  .main-page {
+    padding: 24px 64px;
+  }
+
+  .curriculum-list {
+    gap: 64px;
+    justify-items: center;
+  }
+
+  .curriculum-card {
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+    padding: 0 32px;
+  }
+
+  .curriculum-card__order {
+    padding: 6px 24px;
+    font-size: 1.2rem;
+  }
+}
