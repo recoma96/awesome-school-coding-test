@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- CSS: 공통 → 컴포넌트 → 페이지 순서로 로드한다. (뒤에 오는 파일이 앞의 규칙을 덮어쓴다) -->
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/register.css">
+
+  <!-- 메인 폰트 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Nanum+Gothic+Coding&family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+  
+  <!-- JS -->
+  <script src="/js/register.js" defer></script>
+  <title>교육 신청 페이지</title>
+</head>
+<body>
+  <main class="page">
+    <section class="card">
+      <h1 class="card__title">교육 신청</h1>
+      <p class="card__description">아래 정보를 입력하신 후 신청하기 버튼을 눌러주세요.</p>
+
+      <form id="enrollment-form" class="form" novalidate>
+        <div id="form-message" class="form__message" role="alert" hidden></div>
+
+        <div class="form__grid">
+          <div class="field">
+            <label class="field__label" for="name">이름</label>
+            <input class="field__input" type="text" id="name" name="name"
+                   maxlength="16" autocomplete="name" required>
+            <p class="field__error" data-error-for="name"></p>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="email">이메일</label>
+            <input class="field__input" type="email" id="email" name="email"
+                   maxlength="254" autocomplete="email" inputmode="email" required>
+            <p class="field__error" data-error-for="email"></p>
+          </div>
+
+          <div class="field field--full">
+            <label class="field__label" for="address">주소</label>
+            <input class="field__input" type="text" id="address" name="address"
+                   maxlength="256" autocomplete="street-address" required>
+            <p class="field__error" data-error-for="address"></p>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="availableConnectionDate">연락 가능 날짜</label>
+            <input class="field__input" type="date" id="availableConnectionDate"
+                   name="availableConnectionDate" required>
+            <p class="field__error" data-error-for="availableConnectionDate"></p>
+          </div>
+        </div>
+
+        <button id="submit-button" class="button button--primary form__submit" type="submit">신청하기</button>
+      </form>
+    </section>
+  </main>
+</body>
+</html>

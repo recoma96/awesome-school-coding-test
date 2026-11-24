@@ -1,0 +1,153 @@
+/* ============================================================
+   공통 컴포넌트
+
+   컴포넌트 자체의 모양(안쪽 크기 포함)만 정의한다.
+   - 여기 둔다: padding, min-height, font-size, border, 색상
+   - 페이지 CSS에 둔다: width, max-width, margin, float 등 "어디에 얼마나 크게" 놓이는지
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   Card
+   ------------------------------------------------------------ */
+.card {
+  background: var(--color-surface);
+  border-radius: var(--radius);
+  padding: 24px 20px;
+}
+
+.card__title {
+  margin: 0 0 4px;
+  font-size: 1.5rem;
+}
+
+.card__description {
+  margin: 0 0 24px;
+  color: var(--color-muted);
+  font-size: 0.9375rem;
+}
+
+@media (min-width: 768px) {
+  .card {
+    padding: 40px;
+    border: 1px solid var(--color-border);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  }
+
+  .card__title {
+    font-size: 1.75rem;
+  }
+}
+
+/* ------------------------------------------------------------
+   Form
+   ------------------------------------------------------------ */
+
+/* 모바일 1열, 태블릿·PC 2열 */
+.form__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .form__grid {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 20px;
+  }
+}
+
+/* 폼 상단 안내 메시지 (register.js 가 --error / --success 를 붙인다) */
+.form__message {
+  margin-bottom: 16px;
+  padding: 12px 14px;
+  border-radius: var(--radius);
+  font-size: 0.9375rem;
+}
+
+.form__message--error {
+  background: var(--color-error-bg);
+  color: var(--color-error);
+}
+
+.form__message--success {
+  background: var(--color-success-bg);
+  color: var(--color-success);
+}
+
+/* ------------------------------------------------------------
+   Field (label + input + error)
+   ------------------------------------------------------------ */
+.field__label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  font-size: 0.9375rem;
+}
+
+.field__input {
+  /* 부모(.field) 너비를 채운다. 실제 너비는 부모 레이아웃이 결정한다. */
+  width: 100%;
+  /* 모바일 터치 영역 최소 높이 */
+  min-height: 48px;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  color: inherit;
+  /* 16px 미만이면 iOS Safari가 입력 시 화면을 확대한다. */
+  font-size: 16px;
+  font-family: inherit;
+}
+
+.field__input:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 1px;
+  border-color: var(--color-primary);
+}
+
+.field__input[aria-invalid="true"] {
+  border-color: var(--color-error);
+}
+
+.field__error {
+  min-height: 1.25em;
+  margin: 4px 0 0;
+  color: var(--color-error);
+  font-size: 0.8125rem;
+}
+
+/* .form__grid 안에서 한 줄 전체를 차지한다. (태블릿·PC) */
+@media (min-width: 768px) {
+  .field--full {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ------------------------------------------------------------
+   Button
+   ------------------------------------------------------------ */
+.button {
+  /* 모바일 터치 영역 최소 높이 */
+  min-height: 52px;
+  padding: 0 24px;
+  border: 0;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.button:disabled {
+  background: var(--color-disabled);
+  cursor: not-allowed;
+}
+
+.button--primary {
+  background: var(--color-primary);
+  color: #ffffff;
+}
+
+.button--primary:hover:not(:disabled) {
+  background: var(--color-primary-hover);
+}

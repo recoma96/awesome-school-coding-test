@@ -1,3 +1,41 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --color-text: #1f2328;
+  --color-muted: #656d76;
+  --color-border: #d0d7de;
+  --color-bg: #f6f8fa;
+  --color-surface: #ffffff;
+  --color-primary: #2563eb;
+  --color-primary-hover: #1d4ed8;
+  --color-disabled: #94a3b8;
+  --color-error: #d1242f;
+  --color-error-bg: #ffebe9;
+  --color-success: #1a7f37;
+  --color-success-bg: #dafbe1;
+  --radius: 8px;
+}
+
 body {
-  color: blue;
+  margin: 0;
+  font-family: "Nanum Gothic Coding", monospace;
+  color: var(--color-text);
+  background: var(--color-bg);
+  line-height: 1.5;
+}
+
+.page {
+  padding: 24px 16px;
+}
+
+@media (min-width: 768px) {
+  .page {
+    display: flex;
+    justify-content: center;
+    padding: 64px 24px;
+  }
 }
