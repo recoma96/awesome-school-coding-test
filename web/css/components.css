@@ -133,6 +133,12 @@
    Button
    ------------------------------------------------------------ */
 .button {
+  /* <a>에 써도 <button>과 같은 모양이 되도록: 글자를 가운데에 두고 밑줄을 없앤다. */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+
   /* 모바일 터치 영역 최소 높이 */
   min-height: 52px;
   padding: 0 24px;

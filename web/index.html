@@ -3,11 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/style.css">
+  <!-- CSS: 공통 → 컴포넌트 → 페이지 순서로 로드한다. (뒤에 오는 파일이 앞의 규칙을 덮어쓴다) -->
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/main.css">
+
+  <!-- 메인 폰트 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Nanum+Gothic+Coding&family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+  
+
+  <!-- JS -->
   <script src="js/main.js" defer></script>
-  <title>Document</title>
+  <title>챗GPT 히어로</title>
 </head>
 <body>
-  <h1>Hello World</h1>
+  <!-- 대표 이미지 -->
+  <header>
+    <img id="hero-image" class="main-image" src="/assets/main.png" alt="챗GPT 히어로 대표 이미지">
+  </header>
+
+  <main class="main-page">
+
+    <div class="head-layer">
+      <h1 id="title"></h1>
+      <div>
+        <p class="introduction-text" id="introduction"></p>
+      </div>
+    </div>
+
+    <div class="curriculum-layer">
+      <h2>커리큘럼</h2>
+      <ol id="curriculum-list" class="curriculum-list"></ol>
+    </div>
+
+    <!-- 페이지 이동이므로 <button> 대신 링크(<a>)에 버튼 스타일을 적용한다. -->
+    <a class="button button--primary apply-button" href="/register/">신청하러 가기</a>
+
+    <!-- 커리큘럼 카드 아이템 템플릿 -->
+    <template id="curriculum-card-template">
+      <li class="card curriculum-card">
+        <img class="curriculum-card__image" alt="" loading="lazy" class="curriculum-card__image">
+        <p class="curriculum-card__order"></p>
+        <h3 class="card__title curriculum-card__topic"></h3>
+        <p class="curriculum-card__activity"></p>
+        <p class="card__description curriculum-card__content"></p>
+      </li>
+    </template>
+  </main>
 </body>
 </html>
