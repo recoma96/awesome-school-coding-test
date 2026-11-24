@@ -5,3 +5,5 @@ load_dotenv()
 from .base import *
 
 ENABLE_API_DOCS = True
+
+ALLOWED_HOSTS = []

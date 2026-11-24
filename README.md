@@ -37,22 +37,10 @@ uv sync
 
 ### 2. 환경 변수 설정
 
-`.env.example`을 복사해 `.env`를 만들고 값을 채워주세요.
+[`.env.example`](/server/.env.example)을 복사해 `.env`를 만들고 값을 채워주세요.
 
 ```bash
 cp .env.example .env
-```
-
-```dotenv
-# Django
-DJANGO_SECRET_KEY=
-
-# Database (PostgreSQL)
-POSTGRES_DB=
-POSTGRES_USER=
-POSTGRES_PASSWORD=
-POSTGRES_HOST=localhost
-POSTGRES_PORT=5432
 ```
 
 시크릿 키는 아래 명령으로 생성할 수 있습니다.
