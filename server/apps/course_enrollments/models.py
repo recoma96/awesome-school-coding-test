@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import Q
 
+
 class CourseEnrollmentStatus(models.TextChoices):
     PENDING = "PENDING", "신청 접수"
     IN_REVIEW = "IN_REVIEW", "확인중"
@@ -8,7 +9,6 @@ class CourseEnrollmentStatus(models.TextChoices):
     CANCELED = "CANCELED", "취소"
     REJECT = "REJECT", "반려"  # 고객이 아닌 내부에서 신청 부적격으로 판단했을 경우
     COMPLETED = "COMPLETED", "수강 완료"
-
 
 
 IN_PROGRESS_STATUSES = (
