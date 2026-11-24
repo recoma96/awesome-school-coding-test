@@ -19,6 +19,10 @@
   margin-top: 8px;
 }
 
+.register-page {
+  padding: 24px 16px;
+}
+
 @media (min-width: 768px) {
   .card {
     width: 100%;
@@ -36,6 +40,12 @@
     content: "";
     display: block;
     clear: both;
+  }
+
+  .register-page {
+    display: flex;
+    justify-content: center;
+    padding: 64px 24px;
   }
 }
 
