@@ -4,10 +4,19 @@
    컴포넌트(components.css)가 이 페이지에서 놓이는 위치와 크기만 정의한다.
    ============================================================ */
 
+/* 주소 검색 버튼: 입력칸이 남은 너비를 쓰고, 버튼은 글자 길이만큼 고정 */
+.address-search-button {
+  flex-shrink: 0;
+}
+
 /* 제출 버튼: 모바일은 가로 전체 */
 .form__submit {
   width: 100%;
   margin-top: 24px;
+}
+
+.address-detail-input {
+  margin-top: 8px;
 }
 
 @media (min-width: 768px) {
@@ -29,3 +38,4 @@
     clear: both;
   }
 }
+

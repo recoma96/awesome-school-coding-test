@@ -15,6 +15,7 @@
   
   <!-- JS -->
   <script src="/js/register.js" defer></script>
+  <script src="//t1.kakaocdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <title>교육 신청 페이지</title>
 </head>
 <body>
@@ -43,8 +44,14 @@
 
           <div class="field field--full">
             <label class="field__label" for="address">주소</label>
-            <input class="field__input" type="text" id="address" name="address"
-                   maxlength="256" autocomplete="street-address" required>
+            <div class="field__row">
+              <input class="field__input" type="text" id="address" name="address"
+                     maxlength="128" autocomplete="street-address" required>
+              <!-- type="button": 폼 제출(submit)이 일어나지 않게 한다. -->
+              <button id="address-search-button" class="button button--secondary button--compact address-search-button"
+                      type="button">주소 검색</button>
+            </div>
+            <input class="field__input address-detail-input" type="text" id="addressDetail" maxlength="128" placeholder="상세주소" required>
             <p class="field__error" data-error-for="address"></p>
           </div>
 

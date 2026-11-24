@@ -6,6 +6,7 @@ const FIELD_NAMES = ["name", "email", "address", "availableConnectionDate"];
 const form = document.getElementById("enrollment-form");
 const submitButton = document.getElementById("submit-button");
 const formMessage = document.getElementById("form-message");
+const addresButton = document.getElementById("address-search-button");
 
 let isSubmitting = false;
 
@@ -91,6 +92,10 @@ form.addEventListener("submit", async (event) => {
     const payload = Object.fromEntries(
       FIELD_NAMES.map((fieldName) => [fieldName, form.elements[fieldName].value.trim()])
     );
+    
+    // 상세 주소 추가
+    const addressDetail = form.elements.addressDetail.value.trim();
+    payload.address = [payload.address, addressDetail].filter(Boolean).join(" ");
 
     const response = await fetch(ENROLLMENT_URL, {
       method: "POST",
@@ -121,4 +126,15 @@ form.addEventListener("submit", async (event) => {
       setSubmitting(false);
     }
   }
+});
+
+/* 주소 버튼 핸들러 본문 */
+addresButton.addEventListener("click", () => {
+  new kakao.Postcode({
+    oncomplete: (data) => {
+      let address = data.userSelectedType === "R" ? data.roadAddress : data.jibunAddress;
+      form.elements.address.value = address;
+      form.elements.addressDetail.focus();
+    }
+  }).open();
 });
